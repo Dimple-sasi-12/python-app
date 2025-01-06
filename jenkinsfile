@@ -18,9 +18,9 @@ pipeline {
         }
         stage ("remove images and containers") {
             steps {
-                sh 'docker stop $(docker ps -q) || true'  // Stop all running containers (if any)
-                sh 'docker rm $(docker ps -aq) || true'   // Remove all containers (if any)
-                sh 'docker rmi $(docker images -q) || true' // Remove all images (if any)
+                sh 'docker stop $(docker ps -q) || true'  
+                sh 'docker rm $(docker ps -aq) || true'   
+                sh 'docker rmi $(docker images -q) || true' 
             }
         }
         stage ("create images") {
