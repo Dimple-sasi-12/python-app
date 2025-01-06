@@ -31,7 +31,7 @@ pipeline {
         stage ("push images to dockerhub") {
             steps {
                 script {
-                    withDockerRegistry(credentialsId: 'dockerhub-credentials', toolName: 'docker', url: 'https://login.docker.com/u/login/password') {
+                    withDockerRegistry(credentialsId: 'dockerhub-credentials', toolName: 'docker') {
                         sh 'docker push bunny2003/python-img'
                     }
                 }
