@@ -1,0 +1,134 @@
+/* Reset some basic styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f8f9fa;
+    text-align: center;
+    color: #333;
+    padding: 20px 0;
+}
+
+.container {
+    background-color: #ffffff;
+    max-width: 500px;
+    margin: 30px auto;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.header h1 {
+    font-size: 2.5rem;
+    color: #4CAF50;
+    margin-bottom: 10px;
+}
+
+.header p {
+    font-size: 1rem;
+    color: #666;
+}
+
+.input-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.input-group label {
+    font-size: 1.1rem;
+    margin-bottom: 5px;
+    display: block;
+    color: #333;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 10px;
+    font-size: 1.1rem;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.input-group input:focus {
+    outline: none;
+    border-color: #4CAF50;
+}
+
+button.submit-btn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 20px;
+    font-size: 1.2rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button.submit-btn:hover {
+    background-color: #45a049;
+}
+
+#suggestionBox {
+    border: 1px solid #ccc;
+    max-height: 150px;
+    overflow-y: auto;
+    margin-top: 5px;
+    background-color: #f9f9f9;
+    border-radius: 4px;
+    text-align: left;
+    padding: 5px;
+}
+
+#suggestionBox div {
+    padding: 10px;
+    cursor: pointer;
+}
+
+#suggestionBox div:hover {
+    background-color: #ddd;
+}
+
+.recommendation-box {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: #e1f5e1;
+    border-radius: 8px;
+}
+
+.recommendation-box h2 {
+    font-size: 1.6rem;
+    color: #388e3c;
+    margin-bottom: 15px;
+}
+
+.recommendation-text {
+    font-size: 1.2rem;
+    color: #333;
+    font-weight: bold;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 600px) {
+    .container {
+        width: 90%;
+        padding: 20px;
+    }
+
+    .header h1 {
+        font-size: 2rem;
+    }
+
+    .input-group input {
+        font-size: 1rem;
+    }
+
+    button.submit-btn {
+        font-size: 1rem;
+    }
+}

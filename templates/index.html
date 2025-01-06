@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medicine Recommender</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script>
+        // Access the symptoms list passed from Python to JavaScript
+        const symptoms = {{ symptoms|tojson }};
+        
+        // Function to filter symptoms based on user input
+        function suggestSymptoms(input) {
+            const filteredSymptoms = symptoms.filter(symptom => symptom.toLowerCase().startsWith(input.toLowerCase()));
+            const suggestionBox = document.getElementById("suggestionBox");
+            suggestionBox.innerHTML = "";
+            filteredSymptoms.forEach(function(symptom) {
+                const option = document.createElement("div");
+                option.textContent = symptom;
+                option.onclick = function() {
+                    selectSymptom(symptom);
+                };
+                suggestionBox.appendChild(option);
+            });
+        }
+
+        function selectSymptom(symptom) {
+            document.getElementById("symptom").value = symptom;
+            document.getElementById("suggestionBox").innerHTML = "";
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Medicine Recommender</h1>
+            <p>Get accurate medicine recommendations based on symptoms and age.</p>
+        </div>
+        <form method="POST">
+            <div class="input-group">
+                <label for="symptom">Enter Symptom:</label>
+                <input type="text" id="symptom" name="symptom" onkeyup="suggestSymptoms(this.value)" required>
+                <div id="suggestionBox"></div>
+            </div>
+
+            <div class="input-group">
+                <label for="age">Enter Age:</label>
+                <input type="number" id="age" name="age" required>
+            </div>
+            
+            <button type="submit" class="submit-btn">Get Recommendation</button>
+        </form>
+
+        {% if recommendation %}
+            <div class="recommendation-box">
+                <h2>Recommended Tablet for {{ corrected_symptom }}:</h2>
+                <p class="recommendation-text">{{ recommendation }}</p>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
