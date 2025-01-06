@@ -20,7 +20,7 @@ pipeline {
             steps {
                 sh 'docker stop $(docker ps -q) || true'
                 sh 'docker rm $(docker ps -aq) || true'
-                sh 'docker rmi (docker images) || true'
+                sh 'docker rmi (docker images -q) || true'
             }
         }
         stage ("create images") {
