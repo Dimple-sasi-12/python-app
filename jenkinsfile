@@ -11,10 +11,15 @@ pipeline {
                 sh 'mvn clean install'
             }
         }
+        stage ("deploy") {
+            steps {
+                echo "sucessfully executed"
+            }
+        }
         stage ("create docker-image") {
             steps {
-                withDockerRegistry(credentialsId: 'dockerhub-credentials') {
-                    sh 'docker build -t bunny2003/python-img .'
+                withDockerRegistry(credentialsId: 'dockerhub-credentials', toolName: 'docker') {
+                    sh 'docker build -t bunny2003/python-img'
                 }
             }
         }
@@ -26,6 +31,7 @@ pipeline {
         stage ("create docker-container") {
             steps {
                 sh 'docker run -itd -p 8082:5000 bunny2003/python-img'
+                echo "image and container is created"
             }
         }
     }
