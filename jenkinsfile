@@ -18,12 +18,7 @@ pipeline {
         }
         stage ("create and push image to dockerhub") {
             steps {
-                script {
-                    withDockerRegistry(credentialsId: 'dockerhub-credentials', url: 'docker.io') {
-                        sh 'docker build -t bunny2003/python-img .'
-                        sh 'docker push bunny2003/python-img'
-                    }
-                }
+                sh 'docker build -t bunny2003/python-img .'
             }
         }
         stage ("create docker-container") {
