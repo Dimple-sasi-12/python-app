@@ -13,14 +13,14 @@ pipeline {
         }
         stage ("deploy") {
             steps {
-                echo "sucessfully executed"
+                echo "Successfully executed"
             }
         }
         stage ("remove images and containers") {
             steps {
-                sh 'docker stop $(docker ps -q) || true'
-                sh 'docker rm $(docker ps -aq) || true'
-                sh 'docker rmi (docker images -q) || true'
+                sh 'docker stop $(docker ps -q) || true'  // Stop all running containers (if any)
+                sh 'docker rm $(docker ps -aq) || true'   // Remove all containers (if any)
+                sh 'docker rmi $(docker images -q) || true' // Remove all images (if any)
             }
         }
         stage ("create images") {
@@ -31,7 +31,7 @@ pipeline {
         stage ("create docker-container") {
             steps {
                 sh 'docker run -itd -p 8082:5000 bunny2003/python-img'
-                echo "image and container is created"
+                echo "Image and container are created"
             }
         }
     }
