@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage ("scm") {
             steps {
-                git branch: 'branch1' url: 'https://github.com/Dimple-sasi-12/python-app.git'
+                git branch: 'branch1', url: 'https://github.com/Dimple-sasi-12/python-app.git'
             }
         }
         stage ("build") {
