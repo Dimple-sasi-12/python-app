@@ -16,5 +16,16 @@ pipeline {
                 echo "sucessfully executed"
             }
         }
+        stage ("create docker-image") {
+            steps {
+                bat 'docker build -t python-img .'
+            }
+        }
+        stage ("create docker-container") {
+            steps {
+                bat 'docker run -itd -p 8082:5000 python-img'
+                echo "image and container is created"
+            }
+        }
     }
 }
