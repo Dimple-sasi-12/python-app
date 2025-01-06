@@ -18,7 +18,9 @@ pipeline {
         }
         stage ("create docker-image") {
             steps {
-                bat 'docker build -t python-img .'
+                withDockerRegistry(credentialsId: 'dockerhub-credentials') {
+                    bat 'docker build -t python-img .'
+                }
             }
         }
         stage ("create docker-container") {
