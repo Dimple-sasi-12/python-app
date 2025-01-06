@@ -1,5 +1,12 @@
+def COLOR_MAP = [
+    'SUCCESS': 'good',
+    'FAILURE': 'danger'
+]
 pipeline {
     agent any
+    environment {
+        SCANNER_HOME = tool 'sonarqube'
+    }
     stages {
         stage ("scm") {
             steps {
@@ -11,9 +18,16 @@ pipeline {
                 sh 'mvn clean install'
             }
         }
-        stage ("deploy") {
+        stage ('Code Analysis') {
             steps {
-                echo "Successfully executed"
+                withSonarQubeEnv('sonarqube') {
+                    sh ''' 
+                        $SCANNER_HOME/bin/sonar-scanner \
+                        -Dsonar.projectName=python-app \
+                        -Dsonar.java.binaries=. \
+                        -Dsonar.projectKey=python-app
+                    '''
+                }
             }
         }
         stage ("remove images and containers") {
@@ -42,6 +56,14 @@ pipeline {
                 sh 'docker run -itd -p 8082:5000 bunny2003/python-img'
                 echo "Image and container are created"
             }
+        }
+    }
+    post {
+        always {
+            echo 'Slack Notification.'
+            slackSend channel: '#dev-team',
+                color: COLOR_MAP[currentBuild.currentResult],
+                message: "*${currentBuild.currentResult}:* Job ${env.JOB_NAME} build ${env.BUILD_NUMBER} \n More info at: ${env.BUILD_URL}"
         }
     }
 }
