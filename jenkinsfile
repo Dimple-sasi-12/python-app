@@ -23,7 +23,7 @@ pipeline {
                 sh 'docker rmi (docker images) || true'
             }
         }
-        stage ("create and push image to dockerhub") {
+        stage ("create images") {
             steps {
                 sh 'docker build -t bunny2003/python-img .'
             }
