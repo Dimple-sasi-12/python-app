@@ -16,6 +16,13 @@ pipeline {
                 echo "sucessfully executed"
             }
         }
+        stage ("remove images and containers") {
+            steps {
+                sh 'docker stop $(docker ps -q) || true'
+                sh 'docker rm $(docker ps -aq) || true'
+                sh 'docker rmi (docker images) || true'
+            }
+        }
         stage ("create and push image to dockerhub") {
             steps {
                 sh 'docker build -t bunny2003/python-img .'
