@@ -19,13 +19,18 @@ pipeline {
         stage ("create docker-image") {
             steps {
                 withDockerRegistry(credentialsId: 'dockerhub-credentials') {
-                    bat 'docker build -t python-img .'
+                    bat 'docker build -t bunny2003/python-img .'
                 }
+            }
+        }
+        stage ("push image to dockerhub") {
+            steps {
+                bat 'docker push bunny2003/python-img'
             }
         }
         stage ("create docker-container") {
             steps {
-                bat 'docker run -itd -p 8082:5000 python-img'
+                bat 'docker run -itd -p 8082:5000 bunny2003/python-img'
                 echo "image and container is created"
             }
         }
