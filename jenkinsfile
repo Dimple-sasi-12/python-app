@@ -1,0 +1,20 @@
+pipeline {
+    agent any
+    stages {
+        stage ("scm") {
+            steps {
+                git ' https://github.com/Dimple-sasi-12/python-app.git'
+            }
+        }
+        stage ("build") {
+            steps {
+                bat 'mvn clean install'
+            }
+        }
+        stage ("deploy") {
+            steps {
+                echo "sucessfully executed"
+            }
+        }
+    }
+}
