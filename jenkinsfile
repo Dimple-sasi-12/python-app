@@ -1,3 +1,7 @@
+def COLOR_MAP = [
+    'SUCCESS': 'good',
+    'FAILURE': 'danger'
+]
 pipeline {
     agent any
     stages {
@@ -32,6 +36,31 @@ pipeline {
             steps {
                 sh 'docker run -itd -p 8082:5000 bunny2003/python-img'
                 echo "Image and container are created"
+            }
+        }
+    }
+    post {
+        always {
+            echo 'Slack Notification.'
+            slackSend channel: '#dev-team',
+                      color: COLOR_MAP[currentBuild.currentResult],
+                      message: "*${currentBuild.currentResult}:* Job ${env.JOB_NAME} build ${env.BUILD_NUMBER} \n More info at: ${env.BUILD_URL}"
+
+            script {
+                emailext(
+                    subject: "Jenkins Build Notification - ${currentBuild.fullDisplayName}",
+                    body: """
+                        <h2>Build Notification</h2>
+                        <p>Project: ${JOB_NAME}</p>
+                        <p>Build Number: ${BUILD_NUMBER}</p>
+                        <p>Status: ${currentBuild.currentResult}</p>
+                        <p>View build: <a href="${BUILD_URL}">${BUILD_URL}</a></p>
+                    """,
+                    to: 'munirathnamdimple@gmail.com',
+                    from: 'jenkins@gmail.com',
+                    replyTo: 'jenkins@gmail.com',
+                    mimeType: 'text/html'
+                )
             }
         }
     }
